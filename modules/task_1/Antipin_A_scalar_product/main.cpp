@@ -64,8 +64,8 @@ TEST(scalar_product, can_product_vectors_with_very_big_range)
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	std::vector<int> vec1;
 	std::vector<int> vec2;
-	vec1 = creatRandomVector(10000000);
-	vec2 = creatRandomVector(10000000);
+	vec1 = creatRandomVector(1000000);
+	vec2 = creatRandomVector(1000000);
 
 	int res1 = getParallelScalarProduct(vec1, vec2);
 	int res2 = getSequentialScalarProduct(vec1, vec2);

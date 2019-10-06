@@ -1,12 +1,16 @@
 // Copyright 2019 Antipin Alexander
+#include <vector>
+#include <random>
 #include "../../../modules/task_1/Antipin_A_scalar_product/scalar_product.h"
 
 
 std::vector<int> creatRandomVector(const int v_size) {
-    std::vector<int> vector;
+    std::vector<int> vector(v_size);
+    std::mt19937 gen;
+    gen.seed(static_cast<unsigned int>(time(NULL)));
     for (int i = 0; i < v_size; i++) {
-        vector.push_back(rand() % MAX_NUMBER + MIN_NUMBER);
-        // std::cout << vector.back() << ", ";
+        vector[i] = gen() % MAX_NUMBER + MIN_NUMBER;
+        // std::cout << vector[i] << ", ";
     }
     // std::cout << std::endl;
     return vector;

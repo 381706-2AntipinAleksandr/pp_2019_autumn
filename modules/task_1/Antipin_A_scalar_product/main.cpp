@@ -76,7 +76,7 @@ TEST(scalar_product, can_product_vectors_with_very_big_range) {
 }
 
 int main(int argc, char** argv) {
-    srand(time(NULL));
+    // srand(time(NULL));
     testing::InitGoogleTest(&argc, argv);
     int status, rank, size;
     status = MPI_Init(&argc, &argv);

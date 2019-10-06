@@ -1,5 +1,5 @@
 // Copyright 2019 Antipin Alexander
-#include "scalar_product.h"
+#include "../../../modules/task_1/Antipin_A_scalar_product/scalar_product.h"
 
 
 std::vector<int> creatRandomVector(const int v_size) {
@@ -19,7 +19,7 @@ int getSequentialScalarProduct(const std::vector<int>& a, const std::vector<int>
     int result = 0;
     for (int i = 0; i < a.size(); i++) {
         result += a[i] * b[i];
-    }   
+    }
     return result;
 }
 
@@ -27,7 +27,7 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
     int rank, size;
     if (a.size() != b.size()) {
         throw(1);
-    }  
+    }
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     int v_size = a.size() / size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -42,14 +42,12 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
             result += resive;
         }
         return result;
-    }
-    else {
+    } else {
         if (size % 2 == 1 && rank == size - 1 || a.size() % 2 == 1 && rank == size - 1) {
             for (int i = v_size * rank; i < a.size(); i++) {
                 result_other += a[i] * b[i];
             }
-        }    
-        else {
+        } else {
             for (int i = v_size * rank; i < v_size * (rank + 1); i++) {
                 result_other += a[i] * b[i];
             }

@@ -78,8 +78,7 @@ TEST(scalar_product, can_product_vectors_with_very_big_range) {
 int main(int argc, char** argv) {
     // srand(time(NULL));
     testing::InitGoogleTest(&argc, argv);
-    int status, rank, size;
-    status = MPI_Init(&argc, &argv);
+    MPI_Init(&argc, &argv);
     testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment());
     testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
 
@@ -88,5 +87,5 @@ int main(int argc, char** argv) {
 
     listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
     return RUN_ALL_TESTS();
-    status = MPI_Finalize();
+    MPI_Finalize();
 }

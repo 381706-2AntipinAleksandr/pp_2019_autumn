@@ -1,12 +1,12 @@
 // Copyright 2019 Antipin Alexander
+#include "./scalar_product.h"
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
 #include <vector>
 #include <iostream>
-#include "scalar_product.h"
 
-TEST(scalar_product, can_product_vectors_with_100_range)
-{
+
+TEST(scalar_product, can_product_vectors_with_100_range) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::vector<int> vec1;
@@ -21,8 +21,7 @@ TEST(scalar_product, can_product_vectors_with_100_range)
     }
 }
 
-TEST(scalar_product, can_throw_if_product_vectors_with_different_ranges)
-{
+TEST(scalar_product, can_throw_if_product_vectors_with_different_ranges) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::vector<int> vec1 = creatRandomVector(100);
@@ -32,8 +31,7 @@ TEST(scalar_product, can_throw_if_product_vectors_with_different_ranges)
     }
 }
 
-TEST(scalar_product, can_product_vectors_with_odd_range)
-{
+TEST(scalar_product, can_product_vectors_with_odd_range) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::vector<int> vec1;
@@ -48,8 +46,7 @@ TEST(scalar_product, can_product_vectors_with_odd_range)
     }
 }
 
-TEST(scalar_product, can_product_vectors_with_big_range)
-{
+TEST(scalar_product, can_product_vectors_with_big_range) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::vector<int> vec1;
@@ -64,8 +61,7 @@ TEST(scalar_product, can_product_vectors_with_big_range)
     }
 }
 
-TEST(scalar_product, can_product_vectors_with_very_big_range)
-{
+TEST(scalar_product, can_product_vectors_with_very_big_range) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::vector<int> vec1;
@@ -80,8 +76,7 @@ TEST(scalar_product, can_product_vectors_with_very_big_range)
     }
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     srand(time(NULL));
     testing::InitGoogleTest(&argc, argv);
     int status, rank, size;

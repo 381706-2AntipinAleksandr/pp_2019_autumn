@@ -6,11 +6,11 @@
 #define MIN_NUMBER -1000
 
 
-#include <vector>
-#include <mpi.h>
-#include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <mpi.h>
+#include <vector>
+#include <iostream>
 
 
 std::vector<int> creatRandomVector(const int v_size);

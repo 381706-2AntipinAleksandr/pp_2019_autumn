@@ -1,11 +1,16 @@
+// Copyright 2019 Antipin Alexander
+#ifndef MODULES_TASK_1_ANTIPIN_A_SCALAR_PRODUCT_SCALAR_PRODUCT_H_
+#define MODULES_TASK_1_ANTIPIN_A_SCALAR_PRODUCT_SCALAR_PRODUCT_H_
+
+#define MAX_NUMBER 2000
+#define MIN_NUMBER -1000
+
+
 #include <vector>
 #include <mpi.h>
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
-
-#define MAX_NUMBER 2000
-#define MIN_NUMBER -1000
 
 
 std::vector<int> creatRandomVector(const int v_size);
@@ -13,3 +18,6 @@ std::vector<int> creatRandomVector(const int v_size);
 int getSequentialScalarProduct(const std::vector<int>& a, const std::vector<int>& b);
 
 int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& b);
+
+
+#endif // MODULES_TASK_1_ANTIPIN_A_SCALAR_PRODUCT_SCALAR_PRODUCT_H_

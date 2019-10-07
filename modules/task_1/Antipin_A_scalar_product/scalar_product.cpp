@@ -21,7 +21,7 @@ int getSequentialScalarProduct(const std::vector<int>& a, const std::vector<int>
         throw(1);
     }
     int result = 0;
-    for (int i = 0; i < a.size(); i++) {
+    for (unsigned int i = 0; i < a.size(); i++) {
         result += a[i] * b[i];
     }
     return result;
@@ -45,10 +45,9 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
             MPI_Recv(&resive, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &status);
             result += resive;
         }
-        return result;
     } else {
-        if (size % 2 == 1 && rank == size - 1 || a.size() % 2 == 1 && rank == size - 1) {
-            for (int i = v_size * rank; i < a.size(); i++) {
+        if ((size % 2 == 1 && rank == size - 1) || (a.size() % 2 == 1 && rank == size - 1)) {
+            for (unsigned int i = v_size * rank; i < a.size(); i++) {
                 result_other += a[i] * b[i];
             }
         } else {
@@ -58,4 +57,5 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
         }
         MPI_Send(&result_other, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
     }
+    return result;
 }

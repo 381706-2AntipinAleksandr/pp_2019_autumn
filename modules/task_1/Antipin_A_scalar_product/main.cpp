@@ -77,15 +77,16 @@ TEST(scalar_product, can_product_vectors_with_very_big_range) {
 
 int main(int argc, char** argv) {
     // srand(time(NULL));
-    testing::InitGoogleTest(&argc, argv);
+    ::testing::InitGoogleTest(&argc, argv);
     MPI_Init(&argc, &argv);
-    testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment());
-    testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
+
+    ::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);
+    ::testing::TestEventListeners& listeners =
+        ::testing::UnitTest::GetInstance()->listeners();
 
     listeners.Release(listeners.default_result_printer());
     listeners.Release(listeners.default_xml_generator());
 
     listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
     return RUN_ALL_TESTS();
-    MPI_Finalize();
 }

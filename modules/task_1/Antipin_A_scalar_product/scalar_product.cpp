@@ -42,11 +42,11 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
         }
         for (int i = 1; i < size; i++) {
             MPI_Status status;
-            MPI_Recv(&resive, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &status);
+            MPI_Recv(&resive, 1, MPI_LONG_LONG, i, 0, MPI_COMM_WORLD, &status);
             result += resive;
         }
     } else {
-        if ((size % 2 == 1 && rank == size - 1) || (a.size() % 2 == 1 && rank == size - 1)) {
+        if (rank == size - 1) {
             for (unsigned int i = v_size * rank; i < a.size(); i++) {
                 result_other += a[i] * b[i];
             }
@@ -55,7 +55,7 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
                 result_other += a[i] * b[i];
             }
         }
-        MPI_Send(&result_other, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        MPI_Send(&result_other, 1, MPI_LONG_LONG, 0, 0, MPI_COMM_WORLD);
     }
     return result;
 }

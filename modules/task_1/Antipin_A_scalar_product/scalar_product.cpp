@@ -67,11 +67,11 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
     }
 
     if (rank == size - 1) {
-        for (unsigned int i = 0; i < v_size + re; ++i) {
+        for (int i = 0; i < v_size + re; ++i) {
             result_other += locA[i] * locB[i];
         }
     } else {
-        for (unsigned int i = 0; i < v_size; ++i) {
+        for (int i = 0; i < v_size; ++i) {
             result_other += locA[i] * locB[i];
         }
     }

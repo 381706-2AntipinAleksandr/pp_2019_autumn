@@ -16,7 +16,6 @@ TEST(scalar_product, can_product_vectors_with_100_range) {
     }
 
     int res1 = getParallelScalarProduct(vec1, vec2);
-    
     if (rank == 0) {
         int res2 = getSequentialScalarProduct(vec1, vec2);
         ASSERT_EQ(res1, res2);
@@ -44,7 +43,6 @@ TEST(scalar_product, can_product_vectors_with_odd_range) {
     }
 
     int res1 = getParallelScalarProduct(vec1, vec2);
-    
     if (rank == 0) {
         int res2 = getSequentialScalarProduct(vec1, vec2);
         ASSERT_EQ(res1, res2);
@@ -62,7 +60,6 @@ TEST(scalar_product, can_product_vectors_with_big_range) {
     }
 
     int res1 = getParallelScalarProduct(vec1, vec2);
-    
     if (rank == 0) {
         int res2 = getSequentialScalarProduct(vec1, vec2);
         ASSERT_EQ(res1, res2);
@@ -80,7 +77,6 @@ TEST(scalar_product, can_product_vectors_with_very_big_range) {
     }
 
     int res1 = getParallelScalarProduct(vec1, vec2);
-    
     if (rank == 0) {
         int res2 = getSequentialScalarProduct(vec1, vec2);
         ASSERT_EQ(res1, res2);

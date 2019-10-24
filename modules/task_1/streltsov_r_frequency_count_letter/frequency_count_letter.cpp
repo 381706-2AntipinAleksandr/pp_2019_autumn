@@ -18,8 +18,8 @@ void getRandomStr(char *word, int wordSize) {
 
 int getCountFreqLettInWord(char *word, char letter) {
     int count = 0;
-    auto length_word = strlen(word);
-    for (auto i = 0; i < length_word; i++) {
+    int length_word = strlen(word);
+    for (int i = 0; i < length_word; i++) {
         if (word[i] == letter)
             count++;
     }

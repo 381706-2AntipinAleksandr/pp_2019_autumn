@@ -58,7 +58,7 @@ TEST(Wrong_Order_Vector, Test_on_rand_primere_nechetnom) {
     int WrongOrder;
     if (rank == 0) {
         global_vec = getRandomVector(count_size_vector);
-        std::cout << global_vec;
+        std::cout << *global_vec;
     }
     WrongOrder = getParallelOperations(global_vec, count_size_vector);
     if (rank == 0) {
@@ -75,7 +75,7 @@ TEST(Wrong_Order_Vector, Test_on_rand_primere_chetnom) {
     int WrongOrder;
     if (rank == 0) {
         global_vec = getRandomVector(count_size_vector);
-        std::cout << global_vec;
+        std::cout << *global_vec;
     }
     WrongOrder = getParallelOperations(global_vec, count_size_vector);
     if (rank == 0) {

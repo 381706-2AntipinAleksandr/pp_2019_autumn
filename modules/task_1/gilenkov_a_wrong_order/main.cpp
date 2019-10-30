@@ -58,6 +58,7 @@ TEST(Wrong_Order_Vector, Test_on_rand_primere_nechetnom) {
     int WrongOrder;
     if (rank == 0) {
         global_vec = getRandomVector(count_size_vector);
+        std::cout << global_vec;
     }
     WrongOrder = getParallelOperations(global_vec, count_size_vector);
     if (rank == 0) {
@@ -74,6 +75,7 @@ TEST(Wrong_Order_Vector, Test_on_rand_primere_chetnom) {
     int WrongOrder;
     if (rank == 0) {
         global_vec = getRandomVector(count_size_vector);
+        std::cout << global_vec;
     }
     WrongOrder = getParallelOperations(global_vec, count_size_vector);
     if (rank == 0) {
@@ -82,7 +84,7 @@ TEST(Wrong_Order_Vector, Test_on_rand_primere_chetnom) {
         ASSERT_EQ(WrongOrder, TrueWrongOrder);
     }
 }
-TEST(Wrong_Order_Vector, Test_sravneniye_chisla_cheredovaniy) {
+TEST(Wrong_Order_Vector, Test_sravneniye_vectors) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::vector<int> global_vec, local_vec;

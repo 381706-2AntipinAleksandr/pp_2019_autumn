@@ -69,7 +69,7 @@ int getParallelOperations(std::vector<int> global_vec, int count_size_vector) {
         MPI_Status status;
         MPI_Recv(&v, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
         local_wrong_order += getWrongOrder(local_vec, local_vec.size());
-        if (v*local_vec[0] < 0) {
+        if (v > local_vec[0]) {
             local_wrong_order += 1;
         }
     }

@@ -14,13 +14,13 @@
 #include <iostream>
 
 class Matrix {
-private:
+ private:
     std::vector<double> mem;
     int n;
-public:
+ public:
     Matrix();
-    Matrix(const std::vector<double>& vec);
-    Matrix(const std::vector<std::vector<double>>& mat);
+    explicit Matrix(const std::vector<double>& vec);
+    explicit Matrix(const std::vector<std::vector<double>>& mat);
     Matrix(const Matrix& mat);
     ~Matrix();
     int getMatrixSize();

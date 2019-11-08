@@ -7,8 +7,7 @@ Matrix::Matrix() {
     n = 0;
 }
 
-Matrix::Matrix(const std::vector<double>& vec)
-{
+Matrix::Matrix(const std::vector<double>& vec) {
     mem = std::vector<double>(vec);
     n = static_cast<int>(sqrt(vec.size()));
 }
@@ -31,13 +30,11 @@ Matrix::~Matrix() {
     mem.~vector();
 }
 
-int Matrix::getMatrixSize()
-{
+int Matrix::getMatrixSize() {
     return n;
 }
 
-double & Matrix::getElem(const int row, const int col)
-{
+double & Matrix::getElem(const int row, const int col) {
     return mem[row * col + col];
 }
 
@@ -102,7 +99,8 @@ std::vector<double> Matrix::getParallelSolution(const std::vector<double>& coefV
     for (int i = 0; i < n; ++i) {
         recvVec.resize(n);
         if (i % size == rank) {
-            recvVec = std::vector<double>(additionalMat.begin()+ n * (i / size), additionalMat.begin() + n * (i / size) + n);
+            recvVec = std::vector<double>(additionalMat.begin()+ n * (i / size),
+                additionalMat.begin() + n * (i / size) + n);
         }
         MPI_Bcast(&recvVec[0], n, MPI_DOUBLE, i % size, MPI_COMM_WORLD);
         leaderElem = recvVec[i];

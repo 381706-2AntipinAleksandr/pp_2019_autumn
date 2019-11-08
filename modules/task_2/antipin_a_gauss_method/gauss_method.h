@@ -1,0 +1,32 @@
+// Copyright 2019 Antipin Alexander
+
+#ifndef MODULES_TASK_2_ANTIPIN_A_GAUSS_METHOD_GAUSS_METHOD_H_
+#define MODULES_TASK_2_ANTIPIN_A_GAUSS_METHOD_GAUSS_METHOD_H_
+
+#define MAX_NUMBER 200
+#define MIN_NUMBER -100
+
+
+#include <stdlib.h>
+#include <time.h>
+#include <mpi.h>
+#include <vector>
+#include <iostream>
+
+class Matrix {
+private:
+    std::vector<double> mem;
+    int n;
+public:
+    Matrix();
+    Matrix(const std::vector<double>& vec);
+    Matrix(const std::vector<std::vector<double>>& mat);
+    Matrix(const Matrix& mat);
+    ~Matrix();
+    int getMatrixSize();
+    double& getElem(const int row, const int col);
+    std::vector<double> getSequentialSolution(const std::vector<double>& coefVec);
+    std::vector<double> getParallelSolution(const std::vector<double>& coefVec);
+};
+
+#endif  // MODULES_TASK_2_ANTIPIN_A_GAUSS_METHOD_GAUSS_METHOD_H_

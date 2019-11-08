@@ -1,6 +1,7 @@
 // Copyright 2019 Antipin Alexander
 
 #include "../../../modules/task_2/antipin_a_gauss_method/gauss_method.h"
+#include <vector>
 
 Matrix::Matrix() {
     mem = std::vector<double>(0);

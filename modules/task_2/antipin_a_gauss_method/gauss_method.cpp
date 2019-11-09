@@ -1,6 +1,7 @@
 // Copyright 2019 Antipin Alexander
 
 #include "../../../modules/task_2/antipin_a_gauss_method/gauss_method.h"
+#include <cmath>
 #include <vector>
 
 Matrix::Matrix() {
@@ -77,7 +78,7 @@ std::vector<double> Matrix::getParallelSolution(const std::vector<double>& coefV
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    if (coefVec.size() != n) {
+    if (coefVec.size() != static_cast<unsigned int>(n)) {
         throw(1);
     }
     if (size > n) {

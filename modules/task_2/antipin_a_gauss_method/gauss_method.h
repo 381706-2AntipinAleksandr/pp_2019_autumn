@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <mpi.h>
+#include <cmath>
 #include <vector>
 #include <iostream>
 

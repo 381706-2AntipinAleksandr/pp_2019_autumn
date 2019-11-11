@@ -39,7 +39,6 @@ Matrix::Matrix(const Matrix& mat) {
 }
 
 Matrix::~Matrix() {
-    mem.~vector();
 }
 
 int Matrix::getMatrixSize() {
@@ -58,7 +57,7 @@ std::vector<double> Matrix::getSequentialSolution(const std::vector<double>& coe
     std::vector<double> result(n);
     std::vector<double> additionalMat(mem);
     std::vector<double> copyCoefVec(coefVec);
-    /*for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
         bool isTrue = true;
         if (additionalMat[i*n + i] == 0.0) {
             for (int j = 0; j < n; ++j) {
@@ -77,7 +76,7 @@ std::vector<double> Matrix::getSequentialSolution(const std::vector<double>& coe
         if (isTrue == false) {
             throw(1);
         }
-    }*/
+    }
     for (int k = 0; k < n - 1; ++k) {
         double leaderElem = additionalMat[k*n + k];
         if (leaderElem == 0.0) {

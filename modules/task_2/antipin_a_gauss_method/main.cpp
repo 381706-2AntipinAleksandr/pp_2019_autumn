@@ -9,7 +9,7 @@
 TEST(gauss_method, can_calculate_matrix_correct_using_sequential_method) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<std::vector<double>> vec{ {1, 2, 3}, {2, 3, 4}, {2, 7, 7} };
+    std::vector<std::vector<double>> vec{ {1.0, 2.0, 3.0}, {2.0, 3.0, 4.0}, {2.0, 7.0, 7.0} };
     Matrix mat(vec);
     std::vector<double> res(mat.getMatrixSize());
     if (rank == 0) {
@@ -172,7 +172,15 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct_1) {
     *matrix.getMemOfMatrix() = mat;
     double startTime = 0, endTime = 0;
     startTime = MPI_Wtime();
-    std::vector<double> resM = matrix.getParallelSolution(b);
+    if (rank == 0) {
+        matrix.getSequentialSolution(b);
+    }
+    endTime = MPI_Wtime();
+    if (rank == 0) {
+        printf("Time of parallel method - %f\n", startTime - endTime);
+    }
+    startTime = MPI_Wtime();
+    matrix.getParallelSolution(b);
     endTime = MPI_Wtime();
     if (rank == 0) {
         printf("Time of parallel method - %f\n", startTime - endTime);
@@ -180,8 +188,8 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct_1) {
 }*/
 
 int main(int argc, char** argv) {
-    srand(time(NULL));
     ::testing::InitGoogleTest(&argc, argv);
+    srand(time(NULL));
     MPI_Init(&argc, &argv);
 
     ::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);

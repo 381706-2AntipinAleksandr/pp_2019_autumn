@@ -180,8 +180,8 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct_1) {
 }*/
 
 int main(int argc, char** argv) {
-    srand(time(NULL));
     ::testing::InitGoogleTest(&argc, argv);
+    srand(time(NULL));
     MPI_Init(&argc, &argv);
 
     ::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);

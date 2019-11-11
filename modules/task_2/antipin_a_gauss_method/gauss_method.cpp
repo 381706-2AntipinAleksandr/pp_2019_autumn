@@ -2,6 +2,8 @@
 
 #include "../../../modules/task_2/antipin_a_gauss_method/gauss_method.h"
 #include <cmath>
+#include <random>
+#include <utility>
 #include <vector>
 
 Matrix::Matrix() {
@@ -10,17 +12,25 @@ Matrix::Matrix() {
 }
 
 Matrix::Matrix(const std::vector<double>& vec) {
-    mem = std::vector<double>(vec);
+    mem = vec;
     n = static_cast<int>(sqrt(vec.size()));
 }
 
 Matrix::Matrix(const std::vector<std::vector<double>>& mat) {
+    int k = 0;
+    mem.resize(pow(mat.size(), 2));
     for (size_t i = 0; i < mat.size(); ++i) {
         for (size_t j = 0; j < mat[i].size(); ++j) {
-            mem.push_back(mat[i][j]);
+            mem[k] = mat[i][j];
+            k++;
         }
     }
     n = mat.size();
+}
+
+Matrix::Matrix(const int n) {
+    this->n = n;
+    mem.resize(n * n);
 }
 
 Matrix::Matrix(const Matrix& mat) {
@@ -36,6 +46,10 @@ int Matrix::getMatrixSize() {
     return n;
 }
 
+std::vector<double>* Matrix::getMemOfMatrix() {
+    return &mem;
+}
+
 double & Matrix::getElem(const int row, const int col) {
     return mem[row * col + col];
 }
@@ -44,8 +58,43 @@ std::vector<double> Matrix::getSequentialSolution(const std::vector<double>& coe
     std::vector<double> result(n);
     std::vector<double> additionalMat(mem);
     std::vector<double> copyCoefVec(coefVec);
+    /*for (int i = 0; i < n; ++i) {
+        bool isTrue = true;
+        if (additionalMat[i*n + i] == 0.0) {
+            for (int j = 0; j < n; ++j) {
+                if (additionalMat[j*n + i] != 0.0 && additionalMat[i*n + j] != 0.0) {
+                    for (int k = 0; k < n; k++) {
+                        std::swap(additionalMat[j*n + k], additionalMat[i*n + k]);
+                    }
+                    std::swap(copyCoefVec[i], copyCoefVec[j]);
+                    break;
+                }
+                if (j == n - 1) {
+                    isTrue = false;
+                }
+            }
+        }
+        if (isTrue == false) {
+            throw(1);
+        }
+    }*/
     for (int k = 0; k < n - 1; ++k) {
         double leaderElem = additionalMat[k*n + k];
+        if (leaderElem == 0.0) {
+            for (int j = k + 1; j < n; ++j) {
+                if (additionalMat[j*n + k] != 0.0) {
+                    std::swap(copyCoefVec[k], copyCoefVec[j]);
+                    for (int i = 0; i < n; ++i) {
+                        std::swap(additionalMat[j*n + i], additionalMat[k*n + i]);
+                    }
+                    leaderElem = additionalMat[k*n + k];
+                    break;
+                }
+                if (j == n - 1) {
+                    throw(1);
+                }
+            }
+        }
         bool moreElem = leaderElem >= 0.0 ? true : false;
         for (int rows = k + 1; rows < n; ++rows) {
             double leaderRow = additionalMat[rows*n + k];
@@ -82,8 +131,13 @@ std::vector<double> Matrix::getParallelSolution(const std::vector<double>& coefV
         throw(1);
     }
     if (size > n) {
-        throw(2);
+        std::vector<double> res;
+        if (rank == 0) {
+            res = getSequentialSolution(coefVec);
+        }
+        return res;
     }
+    std::vector<double> copyCoefVec(coefVec);
     double leaderElem = 0;
     int colsCount = n / size;
     (n % size) / (rank + 1) < 1 ? colsCount: ++colsCount;
@@ -97,7 +151,6 @@ std::vector<double> Matrix::getParallelSolution(const std::vector<double>& coefV
         }
     }
     std::vector<double> recvVec;
-    std::vector<double> copyCoefVec(coefVec);
     for (int i = 0; i < n; ++i) {
         recvVec.resize(n);
         if (i % size == rank) {
@@ -106,13 +159,31 @@ std::vector<double> Matrix::getParallelSolution(const std::vector<double>& coefV
         }
         MPI_Bcast(&recvVec[0], n, MPI_DOUBLE, i % size, MPI_COMM_WORLD);
         leaderElem = recvVec[i];
+        if (leaderElem == 0.0) {
+            for (int j = i + 1; j < n; ++j) {
+                if (recvVec[j] != 0.0) {
+                    std::swap(recvVec[i], recvVec[j]);
+                    if (rank == 0) {
+                        std::swap(copyCoefVec[i], copyCoefVec[j]);
+                    }
+                    for (int k = 0; k < colsCount; ++k) {
+                        std::swap(additionalMat[k*n + i], additionalMat[k*n + j]);
+                    }
+                    leaderElem = recvVec[i];
+                    break;
+                }
+                if (j == n - 1) {
+                    throw(1);
+                }
+            }
+        }
         for (int j = i / size; j < colsCount; ++j) {
             double leaderCol = additionalMat[j*n + i];
             for (int k = 0; k < n; ++k) {
                 if (k == i) {
                     additionalMat[j*n + k] /= leaderElem;
                 } else {
-                    additionalMat[j*n + k] -= round((leaderCol * recvVec[k] / leaderElem) * 100000.0) / 100000.0;
+                    additionalMat[j*n + k] -= leaderCol * recvVec[k] / leaderElem;
                 }
             }
         }
@@ -122,10 +193,18 @@ std::vector<double> Matrix::getParallelSolution(const std::vector<double>& coefV
                 if (k == i) {
                     copyCoefVec[k] /= leaderElem;
                 } else {
-                    copyCoefVec[k] -= round((leaderCol * recvVec[k] / leaderElem) * 100000.0) / 100000.0;
+                    copyCoefVec[k] -= leaderCol * recvVec[k] / leaderElem;
                 }
             }
         }
     }
     return copyCoefVec;
+}
+
+void getRandomVector(std::vector<double>* vec) {
+    std::mt19937 gen;
+    gen.seed(static_cast<unsigned int>(time(0)));
+    for (int i = 0; i < (*vec).size(); ++i) {
+        (*vec)[i] = static_cast<double>(gen() % 10);
+    }
 }

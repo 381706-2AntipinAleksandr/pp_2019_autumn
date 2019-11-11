@@ -33,6 +33,7 @@ class Matrix {
     std::vector<double> getParallelSolution(const std::vector<double>& coefVec);
 };
 
+double myAbs(const double& number);
 void getRandomVector(std::vector<double>* vec);
 
 #endif  // MODULES_TASK_2_ANTIPIN_A_GAUSS_METHOD_GAUSS_METHOD_H_

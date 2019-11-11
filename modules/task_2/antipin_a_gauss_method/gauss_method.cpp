@@ -101,14 +101,14 @@ std::vector<double> Matrix::getSequentialSolution(const std::vector<double>& coe
             bool moreRow = leaderRow >= 0.0 ? true : false;
             if ((moreElem && moreRow) || (!moreElem && !moreRow)) {
                 for (int cols = k; cols < n; ++cols) {
-                    additionalMat[rows*n + cols] -= additionalMat[k*n + cols] * abs(leaderRow / leaderElem);
+                    additionalMat[rows*n + cols] -= additionalMat[k*n + cols] * myAbs(leaderRow / leaderElem);
                 }
-                copyCoefVec[rows] -= copyCoefVec[k] * abs(leaderRow / leaderElem);
+                copyCoefVec[rows] -= copyCoefVec[k] * myAbs(leaderRow / leaderElem);
             } else {
                 for (int cols = k; cols < n; ++cols) {
-                    additionalMat[rows*n + cols] += additionalMat[k*n + cols] * abs(leaderRow / leaderElem);
+                    additionalMat[rows*n + cols] += additionalMat[k*n + cols] * myAbs(leaderRow / leaderElem);
                 }
-                copyCoefVec[rows] += copyCoefVec[k] * abs(leaderRow / leaderElem);
+                copyCoefVec[rows] += copyCoefVec[k] * myAbs(leaderRow / leaderElem);
             }
         }
     }
@@ -201,10 +201,18 @@ std::vector<double> Matrix::getParallelSolution(const std::vector<double>& coefV
     return copyCoefVec;
 }
 
+double myAbs(const double & number) {
+    if (number >= 0.0) {
+        return number;
+    } else {
+        return -number;
+    }
+}
+
 void getRandomVector(std::vector<double>* vec) {
     std::mt19937 gen;
     gen.seed(static_cast<unsigned int>(time(0)));
-    for (int i = 0; i < (*vec).size(); ++i) {
+    for (int i = 0; i < static_cast<int>((*vec).size()); ++i) {
         (*vec)[i] = static_cast<double>(gen() % 10);
     }
 }

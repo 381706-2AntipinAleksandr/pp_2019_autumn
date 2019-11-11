@@ -58,7 +58,6 @@ int getParallelScalarProduct(const std::vector<int>& a, const std::vector<int>& 
         locA = std::vector<int>(a.begin(), a.begin() + v_size);
         locB = std::vector<int>(b.begin(), b.begin() + v_size);
     } else if (rank == size - 1) {
-
         locA.resize(v_size + re);
         locB.resize(v_size + re);
 

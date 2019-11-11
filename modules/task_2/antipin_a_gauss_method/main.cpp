@@ -9,7 +9,7 @@
 TEST(gauss_method, can_calculate_matrix_correct_using_sequential_method) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<std::vector<double>> vec{ {1, 2, 3}, {2, 3, 4}, {2, 7, 7} };
+    std::vector<std::vector<double>> vec{ {1.0, 2.0, 3.0}, {2.0, 3.0, 4.0}, {2.0, 7.0, 7.0} };
     Matrix mat(vec);
     std::vector<double> res(mat.getMatrixSize());
     if (rank == 0) {

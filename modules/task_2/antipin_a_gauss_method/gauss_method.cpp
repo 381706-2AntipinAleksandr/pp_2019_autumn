@@ -39,7 +39,6 @@ Matrix::Matrix(const Matrix& mat) {
 }
 
 Matrix::~Matrix() {
-    mem.~vector();
 }
 
 int Matrix::getMatrixSize() {

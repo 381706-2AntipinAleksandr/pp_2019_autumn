@@ -172,7 +172,15 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct_1) {
     *matrix.getMemOfMatrix() = mat;
     double startTime = 0, endTime = 0;
     startTime = MPI_Wtime();
-    std::vector<double> resM = matrix.getParallelSolution(b);
+    if (rank == 0) {
+        matrix.getSequentialSolution(b);
+    }
+    endTime = MPI_Wtime();
+    if (rank == 0) {
+        printf("Time of parallel method - %f\n", startTime - endTime);
+    }
+    startTime = MPI_Wtime();
+    matrix.getParallelSolution(b);
     endTime = MPI_Wtime();
     if (rank == 0) {
         printf("Time of parallel method - %f\n", startTime - endTime);

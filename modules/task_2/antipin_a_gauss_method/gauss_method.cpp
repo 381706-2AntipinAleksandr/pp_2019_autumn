@@ -50,7 +50,7 @@ std::vector<double>* Matrix::getMemOfMatrix() {
 }
 
 double & Matrix::getElem(const int row, const int col) {
-    return mem[row * col + col];
+    return mem[row * n + col];
 }
 
 std::vector<double> Matrix::getSequentialSolution(const std::vector<double>& coefVec) {

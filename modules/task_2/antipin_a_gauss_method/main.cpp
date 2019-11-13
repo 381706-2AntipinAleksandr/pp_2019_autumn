@@ -229,6 +229,7 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct) {
     if (rank == 0) {
         matrix.getSequentialSolution(b);
     }
+
     endTime = MPI_Wtime();
     if (rank == 0) {
         printf("Time of parallel method - %f\n", startTime - endTime);

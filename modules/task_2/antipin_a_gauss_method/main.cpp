@@ -17,6 +17,14 @@ TEST(gauss_method, can_calculate_matrix_correct_using_sequential_method) {
         EXPECT_NEAR(res[0], -0.2, 0.00001);
         EXPECT_NEAR(res[1], -0.6, 0.00001);
         EXPECT_NEAR(res[2], 0.8, 0.00001);
+
+        double first = 1 * res[0] + 2 * res[1] + 3 * res[2];
+        double second = 2 * res[0] + 3 * res[1] + 4 * res[2];
+        double third = 2 * res[0] + 7 * res[1] + 7 * res[2];
+
+        EXPECT_NEAR(first, 1, 0.00001);
+        EXPECT_NEAR(second, 1, 0.00001);
+        EXPECT_NEAR(third, 1, 0.00001);
     }
 }
 
@@ -31,6 +39,14 @@ TEST(gauss_method, can_calculate_matrix_correct_using_parallel_method) {
         EXPECT_NEAR(res[0], -0.2, 0.00001);
         EXPECT_NEAR(res[1], -0.6, 0.00001);
         EXPECT_NEAR(res[2], 0.8, 0.00001);
+
+        double first = 1 * res[0] + 2 * res[1] + 3 * res[2];
+        double second = 2 * res[0] + 3 * res[1] + 4 * res[2];
+        double third = 2 * res[0] + 7 * res[1] + 7 * res[2];
+
+        EXPECT_NEAR(first, 1, 0.00001);
+        EXPECT_NEAR(second, 1, 0.00001);
+        EXPECT_NEAR(third, 1, 0.00001);
     }
 }
 
@@ -46,6 +62,14 @@ TEST(gauss_method, can_calculate_matrix_if_there_is_zero_element) {
         EXPECT_NEAR(res[0], resM[0], 0.00001);
         EXPECT_NEAR(res[1], resM[1], 0.00001);
         EXPECT_NEAR(res[2], resM[2], 0.00001);
+
+        double first = 0 * res[0] + 2 * res[1] + 3 * res[2];
+        double second = 2 * res[0] + 3 * res[1] + 4 * res[2];
+        double third = 2 * res[0] + 7 * res[1] + 7 * res[2];
+
+        EXPECT_NEAR(first, 1, 0.00001);
+        EXPECT_NEAR(second, 2, 0.00001);
+        EXPECT_NEAR(third, 1, 0.00001);
     }
 }
 
@@ -75,6 +99,17 @@ TEST(gauss_method, can_calculate_matrix_with_size_in_5_elements) {
         EXPECT_NEAR(res[2], 1.419, 0.001);
         EXPECT_NEAR(res[3], -0.661, 0.001);
         EXPECT_NEAR(res[4], 2.124, 0.001);
+
+        double first = 1 * res[0] + 2 * res[1] + 2 * res[2] + 3 * res[3] + 5 * res[4];
+        double second = 8 * res[0] + 7 * res[1] + 2 * res[2] + 2 * res[3] + 6 * res[4];
+        double third = 5 * res[0] + 3 * res[1] + 3 * res[2] + 1 * res[3] + 2 * res[4];
+        double fourth = 2 * res[0] + 5 * res[1] + 8 * res[2] + 4 * res[3] + 6 * res[4];
+        double fifth = 3 * res[0] + 2 * res[1] + 1 * res[2] + 7 * res[3] + 5 * res[4];
+        EXPECT_NEAR(first, 5, 0.001);
+        EXPECT_NEAR(second, 3, 0.001);
+        EXPECT_NEAR(third, 7, 0.001);
+        EXPECT_NEAR(fourth, 4, 0.001);
+        EXPECT_NEAR(fifth, 6, 0.001);
     }
 }
 
@@ -128,10 +163,29 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct) {
         EXPECT_NEAR(res[4], resM[4], 0.001);
         EXPECT_NEAR(res[6], resM[6], 0.001);
         EXPECT_NEAR(res[8], resM[8], 0.001);
+
+        double first = 0;
+        double second = 0;
+        double third = 0;
+        double fourth = 0;
+        double fifth = 0;
+
+        for (int i = 0; i < 10; ++i) {
+            first += matrix.getElem(0, i) * res[i];
+            second += matrix.getElem(2, i) * res[i];
+            third += matrix.getElem(4, i) * res[i];
+            fourth += matrix.getElem(6, i) * res[i];
+            fifth += matrix.getElem(8, i) * res[i];
+        }
+        EXPECT_NEAR(first, b[0], 0.001);
+        EXPECT_NEAR(second, b[2], 0.001);
+        EXPECT_NEAR(third, b[4], 0.001);
+        EXPECT_NEAR(fourth, b[6], 0.001);
+        EXPECT_NEAR(fifth, b[8], 0.001);
     }
 }
 
-TEST(gauss_method, can_calculate_big_random_matrix_correct_1) {
+/*TEST(gauss_method, can_calculate_big_random_matrix_correct_1) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     Matrix matrix(100);
@@ -154,7 +208,7 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct_1) {
         EXPECT_NEAR(res[68], resM[68], 0.001);
         EXPECT_NEAR(res[95], resM[95], 0.001);
     }
-}
+}*/
 
 /*TEST(gauss_method, testing_time) {
     int rank;

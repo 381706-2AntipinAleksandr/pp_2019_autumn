@@ -57,26 +57,6 @@ std::vector<double> Matrix::getSequentialSolution(const std::vector<double>& coe
     std::vector<double> result(n);
     std::vector<double> additionalMat(mem);
     std::vector<double> copyCoefVec(coefVec);
-    for (int i = 0; i < n; ++i) {
-        bool isTrue = true;
-        if (additionalMat[i*n + i] == 0.0) {
-            for (int j = 0; j < n; ++j) {
-                if (additionalMat[j*n + i] != 0.0 && additionalMat[i*n + j] != 0.0) {
-                    for (int k = 0; k < n; k++) {
-                        std::swap(additionalMat[j*n + k], additionalMat[i*n + k]);
-                    }
-                    std::swap(copyCoefVec[i], copyCoefVec[j]);
-                    break;
-                }
-                if (j == n - 1) {
-                    isTrue = false;
-                }
-            }
-        }
-        if (isTrue == false) {
-            throw(1);
-        }
-    }
     for (int k = 0; k < n - 1; ++k) {
         double leaderElem = additionalMat[k*n + k];
         if (leaderElem == 0.0) {

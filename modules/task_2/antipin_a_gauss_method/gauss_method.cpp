@@ -202,7 +202,7 @@ void getRandomVector(std::vector<double>* vec) {
 }
 
 double isZero(const double number) {
-    if (std::abs(number) < 0.0000000000001) {
+    if (std::abs(number) < 0.0000000001) {
         return 0.0;
     } else {
         return number;

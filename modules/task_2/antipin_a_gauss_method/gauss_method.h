@@ -5,6 +5,7 @@
 
 #define MAX_NUMBER 200
 #define MIN_NUMBER -100
+#define ORDER 10000
 
 
 #include <stdlib.h>
@@ -35,5 +36,6 @@ class Matrix {
 
 double myAbs(const double& number);
 void getRandomVector(std::vector<double>* vec);
+double isZero(const double number);
 
 #endif  // MODULES_TASK_2_ANTIPIN_A_GAUSS_METHOD_GAUSS_METHOD_H_

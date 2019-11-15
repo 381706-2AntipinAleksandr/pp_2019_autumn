@@ -149,15 +149,19 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     Matrix matrix(10);
+    std::vector<double> mat(100);
     std::vector<double> b(10);
     std::vector<double> res(10);
-    getRandomVector(matrix.getMemOfMatrix());
-    getRandomVector(&b);
     if (rank == 0) {
-        res = matrix.getSequentialSolution(b);
+        getRandomVector(&mat);
+        getRandomVector(&b);
     }
+    MPI_Bcast(&mat[0], 100, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&b[0], 10, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    *matrix.getMemOfMatrix() = mat;
     std::vector<double> resM = matrix.getParallelSolution(b);
     if (rank == 0) {
+        res = matrix.getSequentialSolution(b);
         for (int i = 0; i < 10; ++i)
            for (int j = 0; j < 10; ++j)
                std::cout << matrix.getElem(i, j) << ",  ";
@@ -237,13 +241,13 @@ TEST(gauss_method, can_calculate_big_not_random_matrix_that_was_with_error) {
 TEST(gauss_method, can_calculate_big_not_random_matrix_that_was_with_error_1) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<double> b = { 7, 4, 8, 6, 0, 5, 7, 7, 1, 2 };
+    std::vector<double> b = { 0, 6, 7, 7, 2, 9, 3, 8, 2, 1 };
     std::vector<double> res(10);
-    std::vector<double> vec = { 9,  4,  6,  2,  7,  8,  6,  3,  7,  7,  9,  6,  3,  2,  3,
-        7,  1,  5,  0,  0,  8,  8,  2,  7,  2,  1,  8,  4,  0,  0,  2,  2,  2,  9,  7,  1,
-        9,  1,  3,  7,  8,  8,  7,  6,  0,  8,  5,  4,  5,  3,  0,  0,  2,  0,  0,  6,  3,
-        4,  2,  9,  8,  8,  1,  7,  5,  5,  0,  0,  9,  8,  7,  3,  7,  7,  9,  4,  3,  0,
-        5,  8,  5,  4,  7,  3,  1,  8,  7,  2,  5,  1,  3,  0,  5,  9,  2,  0,  3,  1,  8,  6 };
+    std::vector<double> vec = { 0,  6,  7,  7,  2,  9,  3,  8,  2,  1,  9,  3,  1,  3,  8,
+        5,  3,  5,  6,  8,  6,  6,  4,  6,  1,  9,  7,  7,  1,  1,  5,  4,  5,  9,  8,  2,
+        9,  6,  7,  1,  5,  6,  1,  8,  6,  5,  5,  8,  5,  0,  9,  1,  5,  0,  9,  6,  3,
+        2,  6,  5,  2,  5,  8,  5,  8,  4,  9,  3,  3,  8,  6,  0,  3,  8,  0,  9,  4,  2,
+        6,  9,  8,  2,  1,  7,  5,  9,  7,  9,  9,  8,  5,  1,  7,  1,  6,  2,  6,  3,  1,  6 };
     Matrix mat(vec);
     if (rank == 0) {
         res = mat.getSequentialSolution(b);

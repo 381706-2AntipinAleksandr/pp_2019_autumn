@@ -162,12 +162,12 @@ TEST(gauss_method, can_calculate_big_random_matrix_correct) {
     std::vector<double> resM = matrix.getParallelSolution(b);
     if (rank == 0) {
         res = matrix.getSequentialSolution(b);
-        for (int i = 0; i < 10; ++i)
+        /*for (int i = 0; i < 10; ++i)
            for (int j = 0; j < 10; ++j)
                std::cout << matrix.getElem(i, j) << ",  ";
         std::cout << std::endl;
         for (int i = 0; i < 10; ++i)
-            std::cout << b[i] << ", ";
+            std::cout << b[i] << ", ";*/
         EXPECT_NEAR(res[0], resM[0], 0.001);
         EXPECT_NEAR(res[2], resM[2], 0.001);
         EXPECT_NEAR(res[4], resM[4], 0.001);
@@ -254,9 +254,9 @@ TEST(gauss_method, can_calculate_big_not_random_matrix_that_was_with_error_1) {
     }
     std::vector<double> resM = mat.getParallelSolution(b);
     if (rank == 0) {
-        for (int i = 0; i < 10; ++i)
+        /*for (int i = 0; i < 10; ++i)
             for (int j = 0; j < 10; ++j)
-                std::cout << mat.getElem(i, j) << ",  ";
+                std::cout << mat.getElem(i, j) << ",  ";*/
         EXPECT_NEAR(res[0], resM[0], 0.001);
         EXPECT_NEAR(res[2], resM[2], 0.001);
         EXPECT_NEAR(res[4], resM[4], 0.001);

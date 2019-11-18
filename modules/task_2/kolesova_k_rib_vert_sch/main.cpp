@@ -2,8 +2,9 @@
 
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
+#include <mpi.h>
 #include <vector>
-#include <../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h>
+#include "../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h"
 
 TEST(Test_Rib_Vert_Sch, Create_Rand_Vector) {
   int n = 5;
@@ -23,8 +24,8 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
   int m = 3;
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  std::vector<int> vec = { 1,2,3 };
-  std::vector<int> matr = { 1,2,3,4,5,6,7,8,9 };
+  std::vector<int> vec = { 1, 2, 3 };
+  std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
   std::vector<int> trueVec = { 14, 32, 50 };
   std::vector<int> resVect;
 
@@ -40,8 +41,8 @@ TEST(Test_Rib_Vert_Sch, Mult_One) {
   int m = 3;
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  std::vector<int> vec = { 1,2,3 };
-  std::vector<int> matr = { 1,2,3,4,5,6,7,8,9 };
+  std::vector<int> vec = { 1, 2, 3 };
+  std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
   std::vector<int> trueVec = { 14, 32, 50 };
   std::vector<int> resVect;
 

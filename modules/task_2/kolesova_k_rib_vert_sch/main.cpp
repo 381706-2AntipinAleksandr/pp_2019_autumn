@@ -30,9 +30,8 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
 
   if (rank == 0) {
     resVect = calcMatrOneProc(matr, vec, n, m);
+    EXPECT_EQ(trueVec, resVect);
   }
-
-  EXPECT_EQ(trueVec, resVect);
 }
 
 TEST(Test_Rib_Vert_Sch, Mult_One) {
@@ -47,9 +46,8 @@ TEST(Test_Rib_Vert_Sch, Mult_One) {
 
   if (rank == 0) {
     resVect = calcMatr(matr, vec, n, m);
+    EXPECT_EQ(trueVec, resVect);
   }
-
-  EXPECT_EQ(trueVec, resVect);
 }
 
 TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
@@ -64,9 +62,8 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
 
   if (rank == 0) {
     resVect = calcMatr(matr, vec, n, m);
+    EXPECT_EQ(trueVec, resVect);
   }
-
-  EXPECT_EQ(trueVec, resVect);
 }
 
 TEST(Test_Rib_Vert_Sch, Mult_100Elem) {
@@ -81,9 +78,8 @@ TEST(Test_Rib_Vert_Sch, Mult_100Elem) {
 
   if (rank == 0) {
     resVect = calcMatr(matr, vec, n, m);
+    EXPECT_EQ(trueVec, resVect);
   }
-
-  EXPECT_EQ(trueVec, resVect);
 }
 
 TEST(Test_Rib_Vert_Sch, Mult_1000Elem) {
@@ -98,9 +94,8 @@ TEST(Test_Rib_Vert_Sch, Mult_1000Elem) {
 
   if (rank == 0) {
     resVect = calcMatr(matr, vec, n, m);
+    EXPECT_EQ(trueVec, resVect);
   }
-
-  EXPECT_EQ(trueVec, resVect);
 }
 
 int main(int argc, char** argv) {

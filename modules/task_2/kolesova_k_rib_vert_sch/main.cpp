@@ -19,7 +19,7 @@ TEST(Test_Rib_Vert_Sch, Create_Rand_Martix) {
   EXPECT_EQ(m*n, matr.size());
 }
 
-TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
+TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Test_One) {
   int n = 3;
   int m = 3;
   int rank;
@@ -34,7 +34,7 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
   }
 }
 
-TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
+TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Test_Two) {
   int n = 5;
   int m = 5;
   int rank;
@@ -49,7 +49,7 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
   }
 }
 
-TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
+TEST(Test_Rib_Vert_Sch, Many_Proc_Mult_Test_One) {
   int n = 3;
   int m = 3;
   int rank;
@@ -65,7 +65,7 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
   }
 }
 
-TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
+TEST(Test_Rib_Vert_Sch, Many_Proc_Mult_Test_Two) {
   int n = 5;
   int m = 5;
   int rank;

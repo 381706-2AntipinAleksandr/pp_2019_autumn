@@ -1,5 +1,6 @@
 // Copyright 2019 Kolesova Kristina
 
+#include <mpi.h>
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
 #include <vector>

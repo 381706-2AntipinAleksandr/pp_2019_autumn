@@ -1,9 +1,9 @@
 // Copyright 2019 Kolesova Kristina
 
+#include <../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h>
+#include <mpi.h>
 #include <vector>
 #include <random>
-#include <mpi.h>
-#include <../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h>
 
 std::vector<int> randVec(int n) {
   std::vector<int> vec(n);

@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include <mpi.h>
 #include <vector>
-#include "../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h"
+#include <../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h>
 
 TEST(Test_Rib_Vert_Sch, Create_Rand_Vector) {
   int n = 5;

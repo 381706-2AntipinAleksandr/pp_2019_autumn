@@ -49,8 +49,8 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Status status;
 
-  int modf = m * n / size;
-  int res = m * n % size;
+  std::size_t modf = m * n / size;
+  std::size_t res = m * n % size;
 
   std::vector<int> resVec(m);
   std::vector<int> transpMatr(m*n);
@@ -62,12 +62,12 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
 
   for (std::size_t i = 0; i < n; i++) {
     for (std::size_t j = 0; j < m; j++) {
-      transpMatr[id] = matr[j*n + i]
+      transpMatr[id] = matr[j*n + i];
     }
   }
 
   if (rank == 0) {
-    for (std::size_t i = 0; i < r; i++) {
+    for (std::size_t i = 0; i < res; i++) {
       multMatr[i] = transpMatr[i] * vec[i / m];
     }
   }
@@ -78,13 +78,12 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
     tmpResVec[i] *= vec[rank*modf + i + res];
   }
 
-  MPI_Gather(&tmpResVec[0], modf, MPI_INT, &multMatr[r], modf, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Gather(&tmpResVec[0], modf, MPI_INT, &multMatr[res], modf, MPI_INT, 0, MPI_COMM_WORLD);
 
   if (rank == 0) {
     for (std::size_t i = 0; i < m*n; i++) {
       resVec[i%m] += multMatr[i];
     }
-
-    return resVec;
   }
+  return resVec;
 }

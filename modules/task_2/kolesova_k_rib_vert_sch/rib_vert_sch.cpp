@@ -74,7 +74,7 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
   MPI_Scatter(&transpMatr[res], modf, MPI_INT, &tmpResVec[0], modf, MPI_INT, 0, MPI_COMM_WORLD);
 
   for (std::size_t i = 0; i < modf; i++) {
-    tmpResVec[i] *= vec[rank*modf + i + res];
+    tmpResVec[i] *= vec[(rank*modf + i + res)/m];
   }
 
   MPI_Gather(&tmpResVec[0], modf, MPI_INT, &multMatr[res], modf, MPI_INT, 0, MPI_COMM_WORLD);

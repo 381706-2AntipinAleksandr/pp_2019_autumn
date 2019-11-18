@@ -72,7 +72,7 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   std::vector<int> vec = { 6, 7, 8, 9, 10 };
   std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5 };
-  
+
   std::vector<int> resVec = calcMatr(matr, vec, n, m);
 
   if (rank == 0) {

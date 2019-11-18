@@ -61,7 +61,7 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
 
   for (std::size_t i = 0; i < n; i++) {
     for (std::size_t j = 0; j < m; j++) {
-      transpMatr[id] = matr[j*n + i];
+      transpMatr[id++] = matr[j*n + i];
     }
   }
 

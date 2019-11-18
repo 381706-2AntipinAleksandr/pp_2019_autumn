@@ -42,10 +42,9 @@ TEST(Test_Rib_Vert_Sch, Mult_One) {
   std::vector<int> vec = { 1, 2, 3 };
   std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
   std::vector<int> trueVec = { 14, 32, 50 };
-  std::vector<int> resVect;
 
   if (rank == 0) {
-    resVect = calcMatr(matr, vec, n, m);
+    std::vector<int> resVect = calcMatr(matr, vec, n, m);
     EXPECT_EQ(trueVec, resVect);
   }
 }
@@ -58,10 +57,9 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
   std::vector<int> vec = { 6, 7, 8, 9, 10 };
   std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5 };
   std::vector<int> trueVec = { 130, 330, 310, 110, 130 };
-  std::vector<int> resVect;
 
   if (rank == 0) {
-    resVect = calcMatr(matr, vec, n, m);
+    std::vector<int> resVect = calcMatr(matr, vec, n, m);
     EXPECT_EQ(trueVec, resVect);
   }
 }
@@ -74,10 +72,9 @@ TEST(Test_Rib_Vert_Sch, Mult_100Elem) {
   std::vector<int> vec = randVec(n);
   std::vector<int> matr = randMatr(m, n);
   std::vector<int> trueVec = calcMatrOneProc(matr, vec, n, m);
-  std::vector<int> resVect;
 
   if (rank == 0) {
-    resVect = calcMatr(matr, vec, n, m);
+    std::vector<int> resVect = calcMatr(matr, vec, n, m);
     EXPECT_EQ(trueVec, resVect);
   }
 }
@@ -90,10 +87,9 @@ TEST(Test_Rib_Vert_Sch, Mult_1000Elem) {
   std::vector<int> vec = randVec(n);
   std::vector<int> matr = randMatr(m, n);
   std::vector<int> trueVec = calcMatrOneProc(matr, vec, n, m);
-  std::vector<int> resVect;
 
   if (rank == 0) {
-    resVect = calcMatr(matr, vec, n, m);
+    std::vector<int> resVect = calcMatr(matr, vec, n, m);
     EXPECT_EQ(trueVec, resVect);
   }
 }

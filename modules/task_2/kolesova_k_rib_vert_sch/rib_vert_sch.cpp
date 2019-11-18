@@ -58,16 +58,9 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
 
   int id = 0;
 
-
   for (std::size_t i = 0; i < n; i++) {
     for (std::size_t j = 0; j < m; j++) {
       transpMatr[id++] = matr[j*n + i];
-    }
-  }
-
-  if (rank == 0) {
-    for (std::size_t i = 0; i < res; i++) {
-      multMatr[i] = transpMatr[i] * vec[i / m];
     }
   }
 
@@ -80,6 +73,10 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
   MPI_Gather(&tmpResVec[0], modf, MPI_INT, &multMatr[res], modf, MPI_INT, 0, MPI_COMM_WORLD);
 
   if (rank == 0) {
+    for (std::size_t i = 0; i < res; i++) {
+      multMatr[i] = transpMatr[i] * vec[i / m];
+    }
+
     for (std::size_t i = 0; i < m*n; i++) {
       resVec[i%m] += multMatr[i];
     }

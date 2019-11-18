@@ -47,7 +47,6 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size
 
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  MPI_Status status;
 
   std::size_t modf = m * n / size;
   std::size_t res = m * n % size;

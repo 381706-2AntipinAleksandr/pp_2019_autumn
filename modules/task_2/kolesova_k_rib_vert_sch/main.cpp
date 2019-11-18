@@ -7,14 +7,14 @@
 #include "../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h"
 
 TEST(Test_Rib_Vert_Sch, Create_Rand_Vector) {
-  int n = 5;
+  unsigned int n = 5;
   std::vector<int> vec = randVec(n);
   EXPECT_EQ(n, vec.size());
 }
 
 TEST(Test_Rib_Vert_Sch, Create_Rand_Martix) {
-  int n = 5;
-  int m = 3;
+  unsigned int n = 5;
+  unsigned int m = 3;
   std::vector<int> matr = randMatr(m, n);
   EXPECT_EQ(m*n, matr.size());
 }

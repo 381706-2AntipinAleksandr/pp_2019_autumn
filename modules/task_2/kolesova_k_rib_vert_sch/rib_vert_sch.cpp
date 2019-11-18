@@ -5,40 +5,40 @@
 #include <vector>
 #include <random>
 
-std::vector<int> randVec(int n) {
+std::vector<int> randVec(std::size_t n) {
   std::vector<int> vec(n);
   std::mt19937 engine;
-  for (int i = 0; i < n; i++) {
+  for (std::size_t i = 0; i < n; i++) {
     vec[i] = engine() % 10;
   }
   return vec;
 }
 
-std::vector<int> randMatr(int m, int n) {
+std::vector<int> randMatr(std::size_t m, std::size_t n) {
   std::vector<int> matr(m*n);
   std::mt19937 engine;
-  for (int i = 0; i < m*n; i++) {
+  for (std::size_t i = 0; i < m*n; i++) {
     matr[i] = engine() % 10;
   }
   return matr;
 }
 
-std::vector<int> calcMatrOneProc(std::vector<int> matr, std::vector<int> vec, int n, int m) {
+std::vector<int> calcMatrOneProc(std::vector<int> matr, std::vector<int> vec, std::size_t n, std::size_t m) {
   if (n != vec.size()) {
     throw - 1;
   }
 
   std::vector<int> resVec(m);
 
-  for (int i = 0; i < m; i++) {
-    for (int j = 0; j < n; j++) {
+  for (std::size_t i = 0; i < m; i++) {
+    for (std::size_t j = 0; j < n; j++) {
       resVec[i] += matr[i*n + j] * vec[j];
     }
   }
   return resVec;
 }
 
-std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, int n, int m) {
+std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, std::size_t n, std::size_t m) {
   if (n != vec.size()) {
     throw - 1;
   }
@@ -60,28 +60,28 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, int n, in
   int id = 0;
 
 
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
+  for (std::size_t i = 0; i < n; i++) {
+    for (std::size_t j = 0; j < m; j++) {
       transpMatr[id] = matr[j*n + i]
     }
   }
 
   if (rank == 0) {
-    for (int i = 0; i < r; i++) {
+    for (std::size_t i = 0; i < r; i++) {
       multMatr[i] = transpMatr[i] * vec[i / m];
     }
   }
 
   MPI_Scatter(&transpMatr[res], modf, MPI_INT, &tmpResVec[0], modf, MPI_INT, 0, MPI_COMM_WORLD);
 
-  for (int i = 0; i < modf; i++) {
+  for (std::size_t i = 0; i < modf; i++) {
     tmpResVec[i] *= vec[rank*modf + i + res];
   }
 
   MPI_Gather(&tmpResVec[0], modf, MPI_INT, &multMatr[r], modf, MPI_INT, 0, MPI_COMM_WORLD);
 
   if (rank == 0) {
-    for (int i = 0; i < m*n; i++) {
+    for (std::size_t i = 0; i < m*n; i++) {
       resVec[i%m] += multMatr[i];
     }
 

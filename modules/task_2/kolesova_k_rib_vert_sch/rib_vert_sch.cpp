@@ -49,12 +49,14 @@ std::vector<int> calcMatr(std::vector<int> matr, std::vector<int> vec, int n, in
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Status status;
 
+  int modf = m * n / size;
+  int res = m * n % size;
+
   std::vector<int> resVec(m);
   std::vector<int> transpMatr(m*n);
   std::vector<int> multMatr(m*n);
-  int modf = m * n / size;
-  int res = m * n % size;
   std::vector<int> tmpResVec(modf);
+
   int id = 0;
 
 

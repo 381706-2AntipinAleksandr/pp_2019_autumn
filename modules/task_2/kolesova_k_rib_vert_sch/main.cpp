@@ -2,7 +2,6 @@
 
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
-#include <mpi.h>
 #include <vector>
 #include "../../../modules/task_2/kolesova_k_rib_vert_sch/rib_vert_sch.h"
 
@@ -102,4 +101,19 @@ TEST(Test_Rib_Vert_Sch, Mult_1000Elem) {
   }
 
   EXPECT_EQ(trueVec, resVect);
+}
+
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  MPI_Init(&argc, &argv);
+
+  ::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);
+  ::testing::TestEventListeners& listeners =
+    ::testing::UnitTest::GetInstance()->listeners();
+
+  listeners.Release(listeners.default_result_printer());
+  listeners.Release(listeners.default_xml_generator());
+
+  listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
+  return RUN_ALL_TESTS();
 }

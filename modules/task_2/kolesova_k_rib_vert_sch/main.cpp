@@ -26,11 +26,11 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   std::vector<int> vec = { 1, 2, 3 };
   std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-  std::vector<int> trueVec = { 14, 32, 50 };
+  std::vector<int> trueVect = { 14, 32, 50 };
 
   if (rank == 0) {
     std::vector<int> resVect = calcMatrOneProc(matr, vec, n, m);
-    EXPECT_EQ(trueVec, resVect);
+    EXPECT_EQ(trueVect, resVect);
   }
 }
 
@@ -41,15 +41,15 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   std::vector<int> vec = { 6, 7, 8, 9, 10 };
   std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5 };
-  std::vector<int> trueVec = { 130, 330, 310, 110, 130 };
+  std::vector<int> trueVect = { 130, 330, 310, 110, 130 };
 
   if (rank == 0) {
     std::vector<int> resVect = calcMatrOneProc(matr, vec, n, m);
-    EXPECT_EQ(trueVec, resVect);
+    EXPECT_EQ(trueVect, resVect);
   }
 }
 
-TEST(Test_Rib_Vert_Sch, Mult_One) {
+TEST(Test_Rib_Vert_Sch, One_Proc_Mult_One) {
   int n = 3;
   int m = 3;
   int rank;
@@ -57,11 +57,11 @@ TEST(Test_Rib_Vert_Sch, Mult_One) {
   std::vector<int> vec = { 1, 2, 3 };
   std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-  std::vector<int> resVec = calcMatr(matr, vec, n, m);
+  std::vector<int> resVect = calcMatr(matr, vec, n, m);
 
   if (rank == 0) {
     std::vector<int> trueVect = calcMatrOneProc(matr, vec, n, m);
-    EXPECT_EQ(trueVec, resVect);
+    EXPECT_EQ(trueVect, resVect);
   }
 }
 
@@ -73,11 +73,11 @@ TEST(Test_Rib_Vert_Sch, One_Proc_Mult_Two) {
   std::vector<int> vec = { 6, 7, 8, 9, 10 };
   std::vector<int> matr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5 };
 
-  std::vector<int> resVec = calcMatr(matr, vec, n, m);
+  std::vector<int> resVect = calcMatr(matr, vec, n, m);
 
   if (rank == 0) {
     std::vector<int> trueVect = calcMatrOneProc(matr, vec, n, m);
-    EXPECT_EQ(trueVec, resVect);
+    EXPECT_EQ(trueVect, resVect);
   }
 }
 
@@ -89,11 +89,11 @@ TEST(Test_Rib_Vert_Sch, Mult_100Elem) {
   std::vector<int> vec = randVec(n);
   std::vector<int> matr = randMatr(m, n);
 
-  std::vector<int> resVec = calcMatr(matr, vec, n, m);
+  std::vector<int> resVect = calcMatr(matr, vec, n, m);
 
   if (rank == 0) {
     std::vector<int> trueVect = calcMatrOneProc(matr, vec, n, m);
-    EXPECT_EQ(trueVec, resVect);
+    EXPECT_EQ(trueVect, resVect);
   }
 }
 
@@ -104,11 +104,11 @@ TEST(Test_Rib_Vert_Sch, Mult_1000Elem) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   std::vector<int> vec = randVec(n);
   std::vector<int> matr = randMatr(m, n);
-  std::vector<int> trueVec = calcMatrOneProc(matr, vec, n, m);
+  std::vector<int> trueVect = calcMatrOneProc(matr, vec, n, m);
 
   if (rank == 0) {
     std::vector<int> resVect = calcMatr(matr, vec, n, m);
-    EXPECT_EQ(trueVec, resVect);
+    EXPECT_EQ(trueVect, resVect);
   }
 }
 

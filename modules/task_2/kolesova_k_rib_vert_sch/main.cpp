@@ -104,10 +104,10 @@ TEST(Test_Rib_Vert_Sch, Mult_1000Elem) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   std::vector<int> vec = randVec(n);
   std::vector<int> matr = randMatr(m, n);
-  std::vector<int> trueVect = calcMatrOneProc(matr, vec, n, m);
+  std::vector<int> resVect = calcMatr(matr, vec, n, m);
 
   if (rank == 0) {
-    std::vector<int> resVect = calcMatr(matr, vec, n, m);
+    std::vector<int> trueVect = calcMatrOneProc(matr, vec, n, m);
     EXPECT_EQ(trueVect, resVect);
   }
 }

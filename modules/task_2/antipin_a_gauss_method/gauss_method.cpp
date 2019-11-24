@@ -202,7 +202,7 @@ double myAbs(const double & number) {
 void getRandomVector(std::vector<double>* vec) {
     std::mt19937 gen;
     gen.seed(static_cast<unsigned int>(time(0)));
-    const unsigned int n = static_cast<unsigned int>(sqrt(vec->size()));
+    const int n = static_cast<int>(sqrt(vec->size()));
     int k = n;
     for (int i = static_cast<int>((*vec).size()) - 1; i >= 0; --i) {
         if (k*n - k == i) {

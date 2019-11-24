@@ -203,7 +203,7 @@ void getRandomVector(std::vector<double>* vec) {
     std::mt19937 gen;
     gen.seed(static_cast<unsigned int>(time(0)));
     const unsigned int n = static_cast<unsigned int>(sqrt(vec->size()));
-    unsigned int k = n;
+    int k = n;
     for (int i = static_cast<int>((*vec).size()) - 1; i >= 0; --i) {
         if (k*n - k == i) {
             (*vec)[i] = static_cast<double>(gen() % 10);

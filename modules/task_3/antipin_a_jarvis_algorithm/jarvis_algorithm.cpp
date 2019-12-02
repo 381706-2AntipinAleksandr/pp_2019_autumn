@@ -122,6 +122,7 @@ bool isMaxRightPoint(const std::vector<point>& field, const int min, const int s
                 true : false;
         }
     }
+    return false;
 }
 
 void getSequentialSolution(const std::vector<point>& field, std::vector<int>* result) {
@@ -142,7 +143,7 @@ void getSequentialSolution(const std::vector<point>& field, std::vector<int>* re
     while (true) {
         int currMin = currPoint == 0 ? 1 : 0;
         for (unsigned int i = 0; i < field.size(); ++i) {
-            if (i == currPoint) {
+            if (i == static_cast<unsigned int>(currPoint)) {
                 continue;
             }
             if (field[i] == field[currPoint]) {
@@ -169,7 +170,7 @@ void getParallelSolution(const std::vector<point>& field, std::vector<int>* resu
     int rank, size;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (field.size() < size) {
+    if (field.size() < static_cast<unsigned int>(size)) {
         if (rank == 0) {
             getSequentialSolution(field, result);
         } else {
@@ -192,10 +193,10 @@ void getParallelSolution(const std::vector<point>& field, std::vector<int>* resu
     int pointCount = rank == size - 1 ? field.size() / size + field.size() % size : field.size() / size;
     (*result)[0] = currPoint;
     while (true) {
-        int currMin = currPoint == (field.size() / size) * rank ?
+        int currMin = static_cast<unsigned int>(currPoint) == (field.size() / size) * static_cast<unsigned int>(rank) ?
             (field.size() / size) * rank + 1 : (field.size() / size) * rank;
         for (unsigned int i = currMin; i < (rank == (size - 1) ? field.size() : pointCount * (rank + 1)); ++i) {
-            if (i == currPoint) {
+            if (i == static_cast<unsigned int>(currPoint)) {
                 continue;
             }
             if (field[i] == field[currPoint]) {

@@ -212,7 +212,7 @@ TEST(jarvis_algorithm, can_get_convex_hull_by_parallel_method_1_correct) {
     if (rank == 0) {
         std::vector<int> res2;
         getSequentialSolution(field, &res2);
-        for (int i = 0; i < res.size(); ++i) {
+        for (unsigned int i = 0; i < res.size(); ++i) {
             EXPECT_EQ(res[i], res2[i]);
         }
     }

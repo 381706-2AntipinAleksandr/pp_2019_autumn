@@ -173,6 +173,7 @@ void getParallelSolution(const std::vector<point>& field, std::vector<int>* resu
     if (field.size() < static_cast<unsigned int>(size)) {
         if (rank == 0) {
             getSequentialSolution(field, result);
+            return;
         } else {
             return;
         }

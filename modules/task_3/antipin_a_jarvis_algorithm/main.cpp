@@ -159,7 +159,7 @@ TEST(jarvis_algorithm, can_get_convex_hull_by_parallel_method_1) {
         for (int i = 0; i < 10; ++i) {
             arrX[i] = field[i].getX();
             arrY[i] = field[i].getY();
-            // std::cout << field[i].getX() << " " << field[i].getY() << std::endl;
+            std::cout << field[i].getX() << " " << field[i].getY() << std::endl;
         }
     }
     MPI_Bcast(arrX, 10, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -196,7 +196,7 @@ TEST(jarvis_algorithm, can_get_convex_hull_by_parallel_method_1_correct) {
         for (int i = 0; i < 10; ++i) {
             arrX[i] = field[i].getX();
             arrY[i] = field[i].getY();
-            // std::cout << field[i].getX() << " " << field[i].getY() << std::endl;
+            std::cout << field[i].getX() << " " << field[i].getY() << std::endl;
         }
     }
     MPI_Bcast(arrX, 10, MPI_DOUBLE, 0, MPI_COMM_WORLD);

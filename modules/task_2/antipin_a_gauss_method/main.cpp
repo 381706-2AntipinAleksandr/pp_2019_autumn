@@ -321,7 +321,7 @@ TEST(gauss_method, can_calculate_big_not_random_matrix_that_was_with_error_1) {
     }
 }*/
 
-TEST(gauss_method, testing_time) {
+/*TEST(gauss_method, testing_time) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     Matrix matrix(1000);
@@ -350,7 +350,7 @@ TEST(gauss_method, testing_time) {
     if (rank == 0) {
         printf("Time of parallel method - %f\n", endTime - startTime);
     }
-}
+}*/
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

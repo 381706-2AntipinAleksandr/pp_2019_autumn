@@ -220,7 +220,6 @@ void getParallelSolution(const std::vector<point>& field, std::vector<int>* resu
                 int locPoint;
                 MPI_Status status;
                 MPI_Recv(&locPoint, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &status);
-                // std::cout << locPoint << std::endl;
                 if (isMaxRightPoint(field, currMin, currPoint, locPoint)) {
                     currMin = locPoint;
                 }

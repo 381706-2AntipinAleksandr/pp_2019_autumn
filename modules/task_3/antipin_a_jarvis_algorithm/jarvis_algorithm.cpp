@@ -77,6 +77,9 @@ void getRandomFieldOfPoints(std::vector<point>* field, const int maxX, const int
 }
 
 bool isMaxRightPoint(const std::vector<point>& field, const int min, const int start, const int end) {
+    if (field[start] == field[min]) {
+        return true;
+    }
     double k = (field[end].getY() - field[start].getY()) / (field[end].getX() - field[start].getX());
     double k2 = (field[min].getY() - field[start].getY()) / (field[min].getX() - field[start].getX());
     double b = field[end].getY() - k * field[end].getX();
@@ -96,6 +99,19 @@ bool isMaxRightPoint(const std::vector<point>& field, const int min, const int s
         }
     } else if (k == 0.0) {  // if the direction is horizontal
         newX = field[min].getX();
+        if (field[start].getX() > field[end].getX()) {
+            if (field[min].getY() != field[end].getY()) {
+                return point(newX, field[end].getY()) <= field[min] ? false : true;
+            } else {
+                return field[min] > field[end] ? true : false;
+            }
+        } else if (field[start].getX() < field[end].getX()) {
+            if (field[min].getY() != field[end].getY()) {
+                return point(newX, field[end].getY()) <= field[min] ? true : false;
+            } else {
+                return field[min] > field[end] ? false : true;
+            }
+        }
     } else if (k == k2) {  // if 2 points on one line
         if (isUp) {
             return field[end].getY() > field[min].getY() ? true : false;
@@ -113,14 +129,6 @@ bool isMaxRightPoint(const std::vector<point>& field, const int min, const int s
         return point(newX, field[min].getY()) <= field[min] ? true : false;
     } else if (!isUp && k < 0.0) {
         return point(newX, field[min].getY()) <= field[min] ? true : false;
-    } else if (k == 0.0) {
-        if (field[start].getX() > field[end].getX()) {
-            return point(newX, field[end].getY()) <= field[min] && field[min].getY() != field[end].getY() ?
-                false : true;
-        } else if (field[start].getX() < field[end].getX()) {
-            return point(newX, field[end].getY()) <= field[min] && field[min].getY() != field[end].getY() ?
-                true : false;
-        }
     }
     return false;
 }

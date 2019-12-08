@@ -77,6 +77,9 @@ void getRandomFieldOfPoints(std::vector<point>* field, const int maxX, const int
 }
 
 bool isMaxRightPoint(const std::vector<point>& field, const int min, const int start, const int end) {
+    if (field[start] == field[min]) {
+        return true;
+    }
     double k = (field[end].getY() - field[start].getY()) / (field[end].getX() - field[start].getX());
     double k2 = (field[min].getY() - field[start].getY()) / (field[min].getX() - field[start].getX());
     double b = field[end].getY() - k * field[end].getX();
@@ -217,6 +220,7 @@ void getParallelSolution(const std::vector<point>& field, std::vector<int>* resu
                 int locPoint;
                 MPI_Status status;
                 MPI_Recv(&locPoint, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &status);
+                // std::cout << locPoint << std::endl;
                 if (isMaxRightPoint(field, currMin, currPoint, locPoint)) {
                     currMin = locPoint;
                 }

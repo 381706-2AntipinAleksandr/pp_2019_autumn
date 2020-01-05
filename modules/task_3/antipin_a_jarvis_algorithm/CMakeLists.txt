@@ -11,14 +11,17 @@ if( USE_MPI )
     project( ${ProjectId} )
     message( STATUS "-- " ${ProjectId} )
 
+	find_package( OpenCV REQUIRED )
     file(GLOB_RECURSE header_files "*.h")
     file(GLOB_RECURSE source_files "*.cpp")
     set(PACK_LIB "${ProjectId}_lib")
     add_library(${PACK_LIB} STATIC ${header_files} ${source_files})
-
+	INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
+	link_directories( ${OpenCV_LIB_DIR} )
+	
     add_executable( ${ProjectId} ${source_files} )
 
-    target_link_libraries(${ProjectId} ${PACK_LIB})
+    target_link_libraries(${ProjectId} ${PACK_LIB} ${OpenCV_LIBS})
     if( MPI_COMPILE_FLAGS )
         set_target_properties( ${ProjectId} PROPERTIES COMPILE_FLAGS "${MPI_COMPILE_FLAGS}" )
     endif( MPI_COMPILE_FLAGS )

@@ -3,7 +3,15 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <vector>
+#include <string>
 #include "./jarvis_algorithm.h"
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv2/imgproc.hpp>
+
+#define GRAPH
+#ifndef GRAPH
 
 TEST(jarvis_algorithm, can_generate_random_field_of_points) {
     std::vector<point> field(10);
@@ -269,3 +277,91 @@ int main(int argc, char** argv) {
     listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
     return RUN_ALL_TESTS();
 }
+
+#endif  // !GRAPH
+
+#ifdef GRAPH
+#define MAX_X 25
+#define MAX_Y 25
+int main(int argc, char** argv) {
+    MPI_Init(&argc, &argv);
+    int rank, size;
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    cv::Mat image(1000, 1000, CV_8UC3);
+    if (rank == 0) {
+        for (int i = 0; i < image.rows; ++i) {
+            for (int j = 0; j < image.cols; ++j) {
+                image.at<cv::Vec3b>(i, j) = cv::Vec3b(255, 255, 255);
+            }
+        }
+        cv::line(image, cv::Point(30, 950), cv::Point(960, 950), cv::Vec3b(0, 0, 0), 2);
+        cv::line(image, cv::Point(50, 970), cv::Point(50, 40), cv::Vec3b(0, 0, 0), 2);
+        cv::putText(image, "0", cv::Point(30, 975), cv::FONT_HERSHEY_DUPLEX, 1.0, cv::Vec3b(0, 0, 0));
+        int step_x = MAX_X / 5;
+        int step_y = MAX_Y / 5;
+        int curr_x = 0;
+        int curr_y = 0;
+        for (int i = 0; i < 5; ++i) {
+            cv::line(image, cv::Point(50 + 180 * (i + 1), 960), cv::Point(50 + 180 * (i + 1), 940),
+                cv::Vec3b(0, 0, 0), 2);
+            cv::putText(image, std::to_string(curr_x += step_x), cv::Point(30 + 180 * (i + 1), 975),
+                cv::FONT_HERSHEY_DUPLEX, 1.0, cv::Vec3b(0, 0, 0));
+            cv::line(image, cv::Point(40, 950 - 180 * (i + 1)), cv::Point(60, 950 - 180 * (i + 1)),
+                cv::Vec3b(0, 0, 0), 2);
+            cv::putText(image, std::to_string(curr_y += step_y), cv::Point(10, 980 - 180 * (i + 1)),
+                cv::FONT_HERSHEY_DUPLEX, 1.0, cv::Vec3b(0, 0, 0));
+        }
+    }
+    std::vector<point> field(10);
+    double* arrX = new double[10];
+    double* arrY = new double[10];
+    if (rank == 0) {
+        getRandomFieldOfPoints(&field, 25, 5, 25, 5);
+        int one_x = 900 / MAX_X;
+        int one_y = 900 / MAX_Y;
+        for (int i = 0; i < 10; ++i) {
+            arrX[i] = field[i].getX();
+            arrY[i] = field[i].getY();
+            std::cout << i << " - " << field[i].getX() << ", " << field[i].getY() << std::endl;
+            cv::line(image, cv::Point(46 + one_x * arrX[i], 947 - one_y * arrY[i]), cv::Point(46 + one_x * arrX[i],
+                947 - one_y * arrY[i]), cv::Vec3b(0, 0, 255), 5);
+            cv::putText(image, std::to_string(int(arrX[i])), cv::Point(26 + one_x * arrX[i], 967 - one_y * arrY[i]),
+                cv::FONT_HERSHEY_DUPLEX, 1.0, cv::Vec3b(0, 0, 0));
+            cv::putText(image, std::to_string(int(arrY[i])), cv::Point(66 + one_x * arrX[i], 967 - one_y * arrY[i]),
+                cv::FONT_HERSHEY_DUPLEX, 1.0, cv::Vec3b(0, 0, 0));
+        }
+    }
+    MPI_Bcast(arrX, 10, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(arrY, 10, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    std::vector<int> res;
+    if (rank != 0) {
+        for (int i = 0; i < 10; ++i) {
+            field[i].setX(arrX[i]);
+            field[i].setY(arrY[i]);
+        }
+    }
+    getParallelSolution(field, &res);
+    if (rank == 0) {
+        std::cout << std::endl;
+        for (int i = 0; i < res.size(); ++i) {
+            std::cout << res[i] << std::endl;
+        }
+        int one_x = 900 / MAX_X;
+        int one_y = 900 / MAX_Y;
+        for (int i = 0; i < res.size() - 1; ++i) {
+            cv::line(image, cv::Point(46 + one_x * arrX[res[i]], 947 - one_y * arrY[res[i]]),
+                cv::Point(46 + one_x * arrX[res[i + 1]], 947 - one_y * arrY[res[i + 1]]), cv::Vec3b(0, 0, 0), 2);
+        }
+        cv::line(image, cv::Point(46 + one_x * arrX[res[res.size() - 1]], 947 - one_y * arrY[res[res.size() - 1]]),
+            cv::Point(46 + one_x * arrX[res[0]], 947 - one_y * arrY[res[0]]), cv::Vec3b(0, 0, 0), 2);
+    }
+    if (rank == 0) {
+        cv::namedWindow("Graph", cv::WINDOW_AUTOSIZE);
+        cv::imshow("Graph", image);
+        cv::waitKey(0);
+    }
+    MPI_Finalize();
+    return 0;
+}
+#endif // GRAPH

@@ -55,7 +55,7 @@ std::vector<int> merge_even(const std::vector<int>& vec1, const std::vector<int>
       res[l] = vec2[k];
       l++;
       k++;
-    }else {
+    } else {
       res[l] = vec1[j];
       l++;
       j++;
@@ -96,7 +96,7 @@ std::vector<int> merge_odd(const std::vector<int>& vec1, const std::vector<int>&
       res[l] = vec2[k];
       l++;
       k++;
-    }else {
+    } else {
       res[l] = vec1[j];
       l++;
       j++;
@@ -128,7 +128,7 @@ std::vector<int>  merger(std::vector<int> vec, int even_size, int odd_size) {
   std::vector<int> res(size_loc);
   int j = 0, k = 0, l = 0;
 
-  for(j; (j < even_size && k < odd_size); j++) {
+  for (j; (j < even_size && k < odd_size); j++) {
     res[l] = vec[j];
     l++;
     res[l] = vec[even_size + k];
@@ -216,7 +216,7 @@ std::vector<double> last_razr(std::vector<double> vec1, std::vector<double> vec2
     if (index < 128) {
       vec2[counter] = vec1[i];
       count[index]++;
-    }else {
+    } else {
       count[index]--;
       vec2[counter] = vec1[i];
     }
@@ -226,7 +226,7 @@ std::vector<double> last_razr(std::vector<double> vec1, std::vector<double> vec2
 
 void sort(std::vector<int> vec, int size) {
   std::vector<int> tmp;
-  std::vector<int> res (size);
+  std::vector<int> res(size);
   for (int i = 0; i < 8; i++) {
     razr(vec, res, size, i);
     tmp = vec;
@@ -260,7 +260,7 @@ std::vector<int> merge_batcher(std::vector<int> global_vec, int size_vec) {
 
   if (rank == 0) {
     local_vec.resize(delta + residue);
-  }else {
+  } else {
     local_vec.resize(delta);
   }
 
@@ -268,7 +268,7 @@ std::vector<int> merge_batcher(std::vector<int> global_vec, int size_vec) {
     dis[i] = 0;
     if (i != 0) {
       countsend[i] = delta;
-    }else {
+    } else {
       countsend[i] = delta + residue;
     }
     if (i > 0) {
@@ -276,11 +276,10 @@ std::vector<int> merge_batcher(std::vector<int> global_vec, int size_vec) {
     }
   }
 
-  MPI_Scatterv(global_vec.data(), countsend, dis, MPI_INT, 
+  MPI_Scatterv(global_vec.data(), countsend, dis, MPI_INT,
     &local_vec.front(), countsend[rank], MPI_INT, 0, MPI_COMM_WORLD);
 
- 
-  int numder = (int)round(log2(size);
+  int numder = static_cast<int>(round(log2(size));
 
   local_vec = sort(local_vec);
   local_vec = separation(local_vec);
@@ -306,7 +305,7 @@ std::vector<int> merge_batcher(std::vector<int> global_vec, int size_vec) {
 
       odd.resize(length_recv / 2 + local_vec.size() / 2);
 
-      MPI_Recv(&odd.front(), length_recv / 2 + local_vec.size() / 2, MPI_INT, rank + displs_proc, 
+      MPI_Recv(&odd.front(), length_recv / 2 + local_vec.size() / 2, MPI_INT, rank + displs_proc,
         0, MPI_COMM_WORLD, &status);
 
       local_vec.resize(even.size() + odd.size());
